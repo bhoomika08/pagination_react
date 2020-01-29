@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 import UserListing from '../View/usersListing';
-import './paging.css';
+import './pagination.css';
 
 function Pages(props) {
   return (
@@ -19,11 +19,11 @@ function Paging(props) {
   }
   return (
     <div className="controls pagination">
-      <a href="#" onClick={props.goToPreviousPage}>Prev</a>
+      <a href="#" className={props.currentPage === 1 ? 'deactive' : ''} onClick={props.goToPreviousPage}>Prev</a>
       {pages.map(page => (
         <a key={page} href="#" className={props.currentPage === page ? 'active' : ''} onClick={() => props.goToPage(page)}>{page}</a>
       ))}
-      <a href="#" onClick={props.goToNextPage}>Next</a>
+      <a href="#" className={props.currentPage === props.noOfPages ? 'deactive' : ''} onClick={props.goToNextPage}>Next</a>
     </div>
   );
 }
@@ -61,16 +61,17 @@ class Pagination extends React.Component {
   }
 
   handleChange(event) {
-    if(event.target.value) {
+    let entriesPerPage = parseInt(event.target.value);
+    if(entriesPerPage) {
       this.setState({
-        entries: event.target.value,
+        entries: entriesPerPage,
         currentPage: 1,
         noOfPages: Math.ceil(this.state.items.length / event.target.value),
         users: this.state.items.slice(0, event.target.value)
       });
     } else {
       this.setState({
-        entries: event.target.value,
+        entries: entriesPerPage,
         users: this.state.items,
       });
     }
