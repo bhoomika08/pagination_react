@@ -1,0 +1,5 @@
+.listElement td {
+  border: 1px black solid;
+  width: 200px;
+  text-align: center;
+}
